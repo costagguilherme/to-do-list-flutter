@@ -8,12 +8,10 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController difficultyController = TextEditingController();
   TextEditingController imageController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +19,8 @@ class _FormScreenState extends State<FormScreen> {
       key: _formKey,
       child: Scaffold(
           appBar: AppBar(
-            title:
-            const Text('Nova tarefa', style: TextStyle(color: Colors.white)),
+            title: const Text('Nova tarefa',
+                style: TextStyle(color: Colors.white)),
             backgroundColor: Colors.blue,
           ),
           body: Center(
@@ -41,7 +39,7 @@ class _FormScreenState extends State<FormScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                        validator: (String? value){
+                        validator: (String? value) {
                           if (value != null && value.isEmpty) {
                             return 'Insira o nome da Tarefa';
                           }
@@ -53,16 +51,17 @@ class _FormScreenState extends State<FormScreen> {
                             border: OutlineInputBorder(),
                             hintText: 'Nome',
                             fillColor: Colors.white70,
-                            filled: true
-                        ),
+                            filled: true),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (value) {
-                          if (value!.isEmpty || int.parse(value) > 5 || int.parse(value) < 1) {
-                              return 'Insira uma dificuldade entre 1 e 5';
+                          if (value!.isEmpty ||
+                              int.parse(value) > 5 ||
+                              int.parse(value) < 1) {
+                            return 'Insira uma dificuldade entre 1 e 5';
                           }
                           return null;
                         },
@@ -73,8 +72,7 @@ class _FormScreenState extends State<FormScreen> {
                             border: OutlineInputBorder(),
                             hintText: 'Dificuldade',
                             fillColor: Colors.white70,
-                            filled: true
-                        ),
+                            filled: true),
                       ),
                     ),
                     Padding(
@@ -90,15 +88,14 @@ class _FormScreenState extends State<FormScreen> {
                           if (value!.isEmpty) {
                             return 'Insira uma URL de imagem';
                           }
-      
+
                           return null;
                         },
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Imagem',
                             fillColor: Colors.white70,
-                            filled: true
-                        ),
+                            filled: true),
                       ),
                     ),
                     Container(
@@ -114,21 +111,26 @@ class _FormScreenState extends State<FormScreen> {
                           child: Image.network(
                             imageController.text,
                             fit: BoxFit.cover,
-                            errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                              return Image.asset('assets/images/withoutimage.webp', fit: BoxFit.cover);
+                            errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
+                              return Image.asset(
+                                  'assets/images/withoutimage.webp',
+                                  fit: BoxFit.cover);
                             },
-                          )
-                      ),
+                          )),
                     ),
-              
-                    ElevatedButton(onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        print(nameController.text);
-                        print(difficultyController.text);
-                        print(imageController.text);
-                      }
-
-                    }, child: const Text('Ola'))
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print(nameController.text);
+                            print(difficultyController.text);
+                            print(imageController.text);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Salvando tarefa!')));
+                          }
+                        },
+                        child: const Text('Ola'))
                   ],
                 ),
               ),
