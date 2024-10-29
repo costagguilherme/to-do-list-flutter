@@ -8,9 +8,9 @@ class Task extends StatefulWidget {
 
   const Task(
       {super.key,
-        required this.name,
-        required this.photo,
-        required this.level});
+      required this.name,
+      required this.photo,
+      required this.level});
 
   @override
   State<Task> createState() => _TaskState();
@@ -18,6 +18,13 @@ class Task extends StatefulWidget {
 
 class _TaskState extends State<Task> {
   int nivel = 0;
+
+  bool isAssetImage() {
+    if (widget.photo.contains('http')) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +55,9 @@ class _TaskState extends State<Task> {
                           height: 100,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: Image.asset(widget.photo,
-                                fit: BoxFit.cover),
+                            child: isAssetImage()
+                                ? Image.asset(widget.photo, fit: BoxFit.cover)
+                                : Image.network(widget.photo, fit: BoxFit.cover),
                           )),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -61,7 +69,9 @@ class _TaskState extends State<Task> {
                                   style: const TextStyle(
                                       fontSize: 26,
                                       overflow: TextOverflow.ellipsis))),
-                          Difficulty(difficultyLevel: widget.level,)
+                          Difficulty(
+                            difficultyLevel: widget.level,
+                          )
                         ],
                       ),
                       ElevatedButton(
