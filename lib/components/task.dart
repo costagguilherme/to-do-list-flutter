@@ -6,18 +6,18 @@ class Task extends StatefulWidget {
   final String photo;
   final int level;
 
-  const Task(
+  Task(
       {super.key,
       required this.name,
       required this.photo,
       required this.level});
 
+  int nivel = 0;
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  int nivel = 0;
 
   bool isAssetImage() {
     if (widget.photo.contains('http')) {
@@ -79,7 +79,7 @@ class _TaskState extends State<Task> {
                             backgroundColor: Colors.blue),
                         onPressed: () {
                           setState(() {
-                            nivel++;
+                            widget.nivel++;
                           });
                         },
                         child: const Icon(Icons.arrow_drop_up),
@@ -95,12 +95,12 @@ class _TaskState extends State<Task> {
                         width: 200,
                         child: LinearProgressIndicator(
                             value: (widget.level > 0)
-                                ? (nivel / widget.level) / 10
+                                ? (widget.nivel / widget.level) / 10
                                 : 1)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text('Nivel: $nivel',
+                    child: Text('Nivel: ${widget.nivel}',
                         style: const TextStyle(
                             fontSize: 15,
                             color: Colors.white,
