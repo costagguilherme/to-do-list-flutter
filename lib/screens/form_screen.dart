@@ -140,12 +140,12 @@ class _FormScreenState extends State<FormScreen> {
                           )),
                     ),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             String name = nameController.text;
                             int difficulty = int.parse(difficultyController.text);
                             String photo = imageController.text;
-                            TaskDao().save(Task(name: name, photo: photo, level: difficulty));
+                            await TaskDao().save(Task(name: name, photo: photo, level: difficulty));
 
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
