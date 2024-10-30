@@ -17,7 +17,6 @@ class TaskDao {
     final Database db = await getDatabase();
     var item = await find(task.name);
     if (item.isEmpty) {
-      print('nao existe');
       return await db.insert(_tablename, toMap(task));
     }
     print('Existe');
@@ -27,21 +26,19 @@ class TaskDao {
   Future<List<Task>> findAll() async {
     final Database db = await getDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
-    print('findAll: ${toList(result)}');
     return toList(result);
   }
 
   find(String taskName) async {
     final Database db = await getDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename, where: '$_name = ?', whereArgs: [taskName]);
-    print('find: ${toList(result)}');
     return toList(result);
 
   }
 
-  delete(Task task) async {
+  delete(String taskName) async {
     final Database db = await getDatabase();
-    return await db.delete(_tablename, where: '$_name = ?', whereArgs: [task.name]);
+    return await db.delete(_tablename, where: '$_name = ?', whereArgs: [taskName]);
   }
 
   update(Task task) async {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:primeiro_projeto_flutter/components/task.dart';
 import 'package:primeiro_projeto_flutter/data/task_dao.dart';
-import 'package:primeiro_projeto_flutter/data/task_inherited.dart';
 import 'package:primeiro_projeto_flutter/screens/form_screen.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -18,6 +17,11 @@ class _InitialScreenState extends State<InitialScreen> {
       appBar: AppBar(
           backgroundColor: Colors.blue,
           leading: Container(),
+          actions: [
+            IconButton(onPressed: () {setState(() {
+
+            });}, icon: Icon(Icons.refresh))
+          ],
           title: const Text('Tarefas', style: TextStyle(color: Colors.white))),
       body: Padding(
         padding: EdgeInsets.only(top: 8, bottom: 70),
@@ -27,11 +31,23 @@ class _InitialScreenState extends State<InitialScreen> {
               List<Task>? items = snapshot.data;
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
-                  return Center(child: Column(children: [CircularProgressIndicator(), Text('Carregando...')]));
+                  return Center(
+                      child: Column(children: [
+                    CircularProgressIndicator(),
+                    Text('Carregando...')
+                  ]));
                 case ConnectionState.waiting:
-                  return Center(child: Column(children: [CircularProgressIndicator(), Text('Carregando...')]));
+                  return Center(
+                      child: Column(children: [
+                    CircularProgressIndicator(),
+                    Text('Carregando...')
+                  ]));
                 case ConnectionState.active:
-                  return Center(child: Column(children: [CircularProgressIndicator(), Text('Carregando...')]));
+                  return Center(
+                      child: Column(children: [
+                    CircularProgressIndicator(),
+                    Text('Carregando...')
+                  ]));
                 case ConnectionState.done:
                   if (snapshot.hasData && items != null) {
                     if (items.isNotEmpty) {
@@ -60,7 +76,9 @@ class _InitialScreenState extends State<InitialScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (newContext) => FormScreen(taskContext: context)));
+                  builder: (newContext) => FormScreen(taskContext: context)
+              )
+          ).then((value) => setState(() {print('Recarregando tela');}));
         },
         child: const Icon(Icons.add),
       ),
