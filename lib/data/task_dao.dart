@@ -24,7 +24,7 @@ class TaskDao {
     return await db.update(_tablename, toMap(task), where: '$_name = ?', whereArgs: [task.name]);
   }
 
-  Future<List<Task>> findAll(Task task) async {
+  Future<List<Task>> findAll() async {
     final Database db = await getDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
     print('findAll: ${toList(result)}');
